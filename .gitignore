@@ -1,0 +1,23 @@
+# colcon
+devkit/build/*/
+devkit/install/*/
+devkit/log/*/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Editor settings
+.vscode/
+.idea/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Misc
+*.bak
+*.swp
+*.egg-info/
