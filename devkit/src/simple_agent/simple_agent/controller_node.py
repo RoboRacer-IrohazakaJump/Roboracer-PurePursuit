@@ -86,14 +86,14 @@ class SimpleController(Node):
         for i in range(_len):
             _dist = self.eucledian_dist((0, 0), (range_data[i], angle_data[i]))
             if _dist > rad:
-                range_data[i] = rad
+                range_data[i] = 0.0
         return range_data
 
     def find_longest_sequence(self, range_data: NDArray[np.float32]):
         _len = range_data.shape[0]
         max_seq, max_i, max_temp = 0, 0, 0 
         for i in range(_len):
-            if range_data[i] > 1.0:
+            if range_data[i] > 2.0:
                 max_temp += 1
             else:
                 max_temp = 0
