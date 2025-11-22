@@ -106,7 +106,7 @@ class SimpleController(Node):
         if not self.lidar_data:
             return 0.0, 0.1
         _lidar_data = self.lidar_data
-        _ranges = np.asarray(_lidar_data.ranges, dtype=np.float32)
+        _ranges = np.asarray(_lidar_data.ranges, dtype=np.float32)[:-1]
         _angle = np.arange(_lidar_data.angle_min, _lidar_data.angle_max, _lidar_data.angle_increment)
         _bubble_ranges = self.put_safety_bubble(_ranges.copy(), _angle, 5)
         _filtered_ranges = self.filter_arc(_bubble_ranges, _angle, 10)
@@ -124,7 +124,7 @@ class SimpleController(Node):
         if _gap.shape[0]:
             _steering = sum(_gap) / _gap.shape[0]
         _throttle = 0.05 if _ranges.min() < 0.6 else 0.15
-        return _steering, _throttle
+        return _steering, 0.1
         
 
     def control_loop(self):
