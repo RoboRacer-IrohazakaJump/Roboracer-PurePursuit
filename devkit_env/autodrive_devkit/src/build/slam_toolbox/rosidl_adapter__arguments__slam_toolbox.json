@@ -1,0 +1,15 @@
+{
+  "package_name": "slam_toolbox",
+  "non_idl_tuples": [
+    "/home/autodrive_devkit/src/slam_toolbox:srv/Pause.srv",
+    "/home/autodrive_devkit/src/slam_toolbox:srv/ClearQueue.srv",
+    "/home/autodrive_devkit/src/slam_toolbox:srv/ToggleInteractive.srv",
+    "/home/autodrive_devkit/src/slam_toolbox:srv/Clear.srv",
+    "/home/autodrive_devkit/src/slam_toolbox:srv/SaveMap.srv",
+    "/home/autodrive_devkit/src/slam_toolbox:srv/LoopClosure.srv",
+    "/home/autodrive_devkit/src/slam_toolbox:srv/MergeMaps.srv",
+    "/home/autodrive_devkit/src/slam_toolbox:srv/AddSubmap.srv",
+    "/home/autodrive_devkit/src/slam_toolbox:srv/DeserializePoseGraph.srv",
+    "/home/autodrive_devkit/src/slam_toolbox:srv/SerializePoseGraph.srv"
+  ]
+}

@@ -1,3 +1,6 @@
 [submodule "f1tenth_gym"]
 	path = f1tenth_gym
 	url = https://github.com/f1tenth/f1tenth_gym.git
+[submodule "devkit_env/autodrive_devkit/src/slam_toolbox"]
+	path = devkit_env/autodrive_devkit/src/slam_toolbox
+	url = https://github.com/SteveMacenski/slam_toolbox.git

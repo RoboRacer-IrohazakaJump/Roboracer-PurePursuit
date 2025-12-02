@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "slam_toolbox__py",
+		"source" : "/home/autodrive_devkit/src/build/slam_toolbox/slam_toolbox__py"
+	}
+}
