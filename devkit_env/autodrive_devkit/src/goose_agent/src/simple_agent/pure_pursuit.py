@@ -58,9 +58,9 @@ class PurePursuit(Node):
         self.roll, self.pitch, self.yaw = 0.0, 0.0, 0.0
 
         self.paths = []
-        self.lookahead = 1.5
+        self.lookahead = 1.0
         self.lookahead_gain = 0.5
-        self.v = 0.05
+        self.v = 0.03
         self.deltas = []
         self.avg_filter = 5.0
 
@@ -85,7 +85,8 @@ class PurePursuit(Node):
             self.roll, self.pitch, self.yaw = tf_transformations.euler_from_quaternion([
                 self.q.x, self.q.y, self.q.z, self.q.w
             ])
-
+        except tf2_ros.TransformException as ex:
+            self.get_logger().warn(f"TF not ready: {ex}", throttle_duration_sec=2.0)
         except tf2_ros.LookupException:
             self.get_logger().warn("Transform not available yet")
         except tf2_ros.ExtrapolationException:

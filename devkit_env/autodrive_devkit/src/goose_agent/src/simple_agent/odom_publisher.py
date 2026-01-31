@@ -53,10 +53,10 @@ class OdometryNode(Node):
         self.prev_yaw = None
 
         # Encoder angles (previous values)
-        self.l_rotation = None
-        self.r_rotation = None
         self.prev_l_rot = None
         self.prev_r_rot = None
+        self.l_delta_acc = 0.0
+        self.r_delta_acc = 0.0
 
         # Robot geometry
         self.wheel_radius = 0.0590
@@ -111,53 +111,57 @@ class OdometryNode(Node):
         roll, pitch, yaw = euler_from_quaternion(_local_quat)
         self.yaw = yaw
 
-    def tick_to_angular(self, tick: float):
-        PPR = 16
-        CR = 120
-        return 2 * math.pi * tick / (PPR*CR)
+    def tick_to_angular(self, tick: float) -> float:
+        conversion_rate: float = 10503.62 
+        return 2 * math.pi * tick / conversion_rate
+
+    def angular_to_tick(self, rad: float) -> int:
+        convertion_rate: float = 1920
+        return int(rad * convertion_rate / (2 * math.pi))
 
     def lencoder_callback(self, msg: JointState):
-        cur_l_rot = self.tick_to_angular(msg.position[0])
-        if not self.prev_l_rot:
-            self.l_rotation = 0.0
-        else:
-            self.l_rotation = cur_l_rot - self.prev_l_rot
-        self.prev_l_rot = cur_l_rot
+        cur = msg.position[0]
+        if self.prev_l_rot is not None:
+            self.l_delta_acc += (cur - self.prev_l_rot)
+        self.prev_l_rot = cur
 
     def rencoder_callback(self, msg: JointState):
-        cur_r_rot = self.tick_to_angular(msg.position[0])
-        if not self.prev_r_rot:
-            self.r_rotation = 0.0
-        else:
-            self.r_rotation = cur_r_rot - self.prev_r_rot
-        self.prev_r_rot = cur_r_rot
+        cur = msg.position[0]
+        if self.prev_r_rot is not None:
+            self.r_delta_acc += (cur - self.prev_r_rot)
+        self.prev_r_rot = cur
 
     def get_current_position(self):
         # require quaternion/yaw present
-        if self.l_rotation is None or self.r_rotation is None or self.quaternions is None:
+        if self.prev_l_rot is None or self.prev_r_rot is None or self.quaternions is None:
             return
-        # convert encoder angle deltas to wheel linear displacements
-        s_l = 350 * self.wheel_radius * self.l_rotation
-        s_r = 350 * self.wheel_radius * self.r_rotation
+        
+        # Retrieved the accumulated delta
+        dL = self.l_delta_acc
+        dR = self.r_delta_acc
+        self.l_delta_acc = 0.0
+        self.r_delta_acc = 0.0
 
-        print("Wheel rotation", s_l, s_r)
+        # convert encoder angle deltas to wheel linear displacements
+        s_l = self.wheel_radius * dL
+        s_r = self.wheel_radius * dR
+        print("Wheel", s_l, s_r)
 
         # center (COM) forward displacement
         s = 0.5 * (s_r + s_l)
-        angular_displacement = (s_r - s_l)/self.track_width
+        dtheta = (s_r - s_l)/self.track_width
 
-        self.x = self.x + s*math.cos(self.yaw + angular_displacement)
-        self.y = self.y + s*math.sin(self.yaw + angular_displacement)
-        self.yaw += angular_displacement
+        self.x = self.x + s*math.cos(self.yaw)
+        self.y = self.y + s*math.sin(self.yaw)
 
-        print("Pos", self.x, self.y)
+        print("Pos", self.x, self.y, s)
 
         # Calculate speed from odom
         current_time = self.get_clock().now()
         dt = (current_time - self.prev_time).nanoseconds * 1e-9 
         self.prev_time = current_time
         linear_x = s / dt
-        angular_z = angular_displacement / dt
+        angular_z = dtheta / dt
 
         # Calculate the quaternion
         self.q = quaternion_from_euler(self.roll, self.pitch, self.yaw)
