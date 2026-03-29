@@ -1,7 +1,7 @@
 # colcon
-devkit/build/*/
-devkit/install/*/
-devkit/log/*/
+devkit_env/autodrive_devkit/build/*/
+devkit_env/autodrive_devkit/install/*/
+devkit_env/autodrive_devkit/log/*/
 
 # Python
 __pycache__/
