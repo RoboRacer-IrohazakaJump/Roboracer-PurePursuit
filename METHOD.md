@@ -27,9 +27,9 @@ Based on the schematic above, we assume the turning mobile robot follows a circu
 
 From the simplified geometry above, we can proof that the $\beta$ is equal to $\Delta\theta$ by the following work
 ```math
-180 = \Delta\theta + 90 + (90 - \beta) \\
-\Delta\theta = 180 - 90 - (90 - \beta) \\
-\Delta\theta = 180 - 90 - 90 + \beta \\
+180 = \Delta\theta + 90 + (90 - \beta) \\\\
+\Delta\theta = 180 - 90 - (90 - \beta) \\\\
+\Delta\theta = 180 - 90 - 90 + \beta \\\\
 \Delta\theta = \beta
 ```
 
@@ -41,17 +41,17 @@ we can leverage the $R$, $\Delta\theta$, $d_L$, and $d_R$ to find our target val
 
 First we write the two equation of $d_L$ and $d_R$ as follow
 ```math
-d_L = (R - d_w) \times \Delta\theta \\
+d_L = (R - d_w) \times \Delta\theta \\\\
 d_R = (R + d_w) \times \Delta\theta
 ```
 
 Second, we eliminate the unknown value $R$ by subtracting both equation with each other
 ```math
-d_L = (R - d_w) \times \Delta\theta \\
-d_R = (R + d_w) \times \Delta\theta \\
-....................................... - \\
-d_L - d_R = (- d_w - d_w) \times \Delta\theta \\
-d_L - d_R = -2d_w \times \Delta\theta \\
+d_L = (R - d_w) \times \Delta\theta \\\\
+d_R = (R + d_w) \times \Delta\theta \\\\
+....................................... - \\\\
+d_L - d_R = (- d_w - d_w) \times \Delta\theta \\\\
+d_L - d_R = -2d_w \times \Delta\theta \\\\
 \Delta\theta = \frac{d_R - d_L}{2d_w}
 ```
 
@@ -65,7 +65,7 @@ Since odometry is about approximating how far and where an object has moved from
 
 After we found the angle, we use it to calculate the displacement both in x and y axis using sine or cosine of the angle. We also assume that the $d$ here is approximated to $d_{center}$.
 ```math
-x_{new} = x_{old} + (d \times cos(\Delta\theta)) \\
+x_{new} = x_{old} + (d \times cos(\Delta\theta)) \\\\
 y_{new} = y_{old} + (d \times sin(\Delta\theta))
 ```
 
