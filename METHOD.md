@@ -1,8 +1,8 @@
 ## Odometry
 Our odometry methodology utilize wheel encoder and IMU to estimate how far the mobile robot has moved from a certain point. The wheel encoder provide the information about how far has the wheel rotated in radians. To approximate the distance of each wheel we can apply the following formula
-$$
+```math
 d = radians \times wheel radius
-$$
+```
 However, this does not necessarily give us the distance of the mobile robot. This is because when a mobile robot rotated to a certain direction, the encoder from each wheel will give different value. Therefore, to get the distance, we average the distance from left wheel encoder and right wheel encoder.
 $$
 d_{center} = \frac{(d_{L} + d_{R})}{2}
