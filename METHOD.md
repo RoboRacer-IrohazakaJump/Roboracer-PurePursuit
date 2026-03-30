@@ -42,7 +42,7 @@ we can leverage the $R$, $\Delta\theta$, $d_L$, and $d_R$ to find our target val
 First we write the two equation of $d_L$ and $d_R$ as follow
 $$
 d_L = (R - d_w) \times \Delta\theta \\
-d_R = (R + d_w) \times \Delta\theta \\
+d_R = (R + d_w) \times \Delta\theta
 $$
 
 Second, we eliminate the unknown value $R$ by subtracting both equation with each other
