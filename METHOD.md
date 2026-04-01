@@ -1,9 +1,9 @@
 ## Odometry
 Our odometry methodology utilize wheel encoder and IMU to estimate how far the mobile robot has moved from a certain point. The wheel encoder provide the information about how far has the wheel rotated in radians. To approximate the distance of each wheel we can apply the following formula
 ```math
-d = radians \times wheel radius
+d = \text{radians} \times \text{wheel radius}
 ```
-However, this does not necessarily give us the distance of the mobile robot. This is because when a mobile robot rotated to a certain direction, the encoder from each wheel will give different value. Therefore, to get the distance, we average the distance from left wheel encoder and right wheel encoder.
+However, this does not necessarily give us the linear distance of the mobile robot. This is because when the mobile robot undergoes rotation (left or right), each wheel traces a different arc length due to the robot's angular motion, resulting in different encoder readings (angular replacement). Therefore, to get the estimated distance, we average the distance from left wheel encoder and right wheel encoder.
 ```math
 d_{center} = \frac{(d_{L} + d_{R})}{2}
 ```
@@ -28,9 +28,8 @@ Based on the schematic above, we assume the turning mobile robot follows a circu
 From the simplified geometry above, we can proof that the $\beta$ is equal to $\Delta\theta$ by the following work
 ```math
 \begin{gather*}
-180 = \Delta\theta + 90 + (90 - \beta) \\
-\Delta\theta = 180 - 90 - (90 - \beta) \\
-\Delta\theta = 180 - 90 - 90 + \beta \\
+180 = \Delta\theta + 90 + (90 - \beta)\\
+0 = \Delta\theta - \beta\\
 \Delta\theta = \beta
 \end{gather*}
 ```
